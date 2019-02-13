@@ -14,14 +14,14 @@ const App = () => {
   };
 
   const changeAngle = () => {
-    setAngle(angle === 360 ? 0 : angle + 0.5);
+    setAngle(angle === 360 ? 0 : angle + 0.25);
   };
 
   let timer;
   useEffect(() => {
     timer = setInterval(() => {
       changeAngle();
-    }, 10);
+    }, 20);
     return () => clearInterval(timer);
   });
 
@@ -47,7 +47,8 @@ const App = () => {
           style={{
             left: `calc(${coords.x}px - 5px)`,
             top: `calc(${coords.y}px - 5px)`,
-            backgroundColor: `hsl(${angle}, 100%, 50%)`
+            backgroundColor: `hsl(${angle}, 100%, 50%)`,
+            transform: `rotate(${angle}deg)`
           }}
         />
       </div>

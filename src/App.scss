@@ -15,8 +15,9 @@
   height: 100vmin;
   .dot {
     position: absolute;
-    width: 10pt;
-    height: 10pt;
+    width: 10px;
+    height: 10px;
+    border: 1px solid white;
   }
 }
 input[type="range"] {
