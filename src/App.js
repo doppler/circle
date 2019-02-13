@@ -82,6 +82,7 @@ const App = () => {
         <dt>state</dt>
         <dd>{JSON.stringify({ angle, coords, params }, null, 2)}</dd>
       </dl>
+      <ViewSourceLink />
     </div>
   );
 };
@@ -96,4 +97,14 @@ const Slider = ({ angle, handleAngleSliderChange }) => (
     max={359}
     onChange={handleAngleSliderChange}
   />
+);
+
+const ViewSourceLink = () => (
+  <a
+    href="https://github.com/doppler/circle/blob/master/src/App.js"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    View Source
+  </a>
 );
