@@ -5,27 +5,20 @@ const App = () => {
   const h = 200;
   const k = 200;
   const r = 200;
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const [reverse, setReverse] = useState(false);
-  const handleXChange = event => setX(Number(event.target.value));
-  const handleYChange = event => setY(Number(event.target.value));
+  const [coords, setCoords] = useState({ x: 0, y: 200 });
+  const [angle, setAngle] = useState(270);
 
-  const moveX = () => {
-    if (x === 400) setReverse(true);
-    if (x === 0) setReverse(false);
-    setX(reverse ? x - 1 : x + 1);
+  const handleAngleSliderChange = event => {
+    setAngle(Number(event.target.value));
   };
-  let timer;
+
   useEffect(() => {
-    timer = setInterval(() => {
-      moveX();
-    }, 25);
-    return () => clearInterval(timer);
-  });
-  useEffect(() => {
-    setY(h + Math.sqrt((r + x - k) * (r - x + k)));
-  }, [x]);
+    let radian = (angle * Math.PI) / 180;
+    setCoords({
+      x: h + r * Math.cos(radian),
+      y: k + r * Math.sin(radian)
+    });
+  }, [angle]);
 
   return (
     <div className="App">
@@ -37,23 +30,32 @@ const App = () => {
         <div
           className="dot"
           style={{
-            left: `calc(${x}pt - 5pt)`,
-            top: `calc(${y}pt - 5pt)`
+            left: `calc(${coords.x}pt - 5pt)`,
+            top: `calc(${coords.y}pt - 5pt)`
           }}
         />
       </div>
-      <SliderX {...{ x, handleXChange }} /> {x}
-      <SliderY {...{ y, handleYChange }} /> {y}
+      <Slider {...{ angle, handleAngleSliderChange }} />
+      <dl>
+        <dt>Angle</dt>
+        <dd>{angle}</dd>
+        <dt>X</dt>
+        <dd>{coords.x}</dd>
+        <dt>Y</dt>
+        <dd>{coords.y}</dd>
+      </dl>
     </div>
   );
 };
 
 export default App;
 
-const SliderX = ({ x, handleXChange }) => (
-  <input type="range" min={0} max={400} value={x} onChange={handleXChange} />
-);
-
-const SliderY = ({ y, handleYChange }) => (
-  <input type="range" min={0} max={400} value={y} onChange={handleYChange} />
+const Slider = ({ angle, handleAngleSliderChange }) => (
+  <input
+    type="range"
+    value={angle}
+    min={0}
+    max={359}
+    onChange={handleAngleSliderChange}
+  />
 );
