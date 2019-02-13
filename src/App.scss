@@ -1,0 +1,29 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: #cce;
+}
+
+.circle-container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: 400pt;
+  height: 400pt;
+  border: 1px solid red;
+  .inner-box {
+    width: calc(50% - 2px);
+    height: calc(50% - 2px);
+    border: 1px solid black;
+  }
+  .dot {
+    position: absolute;
+    left: calc(50% - 5pt);
+    top: calc(50% - 5pt);
+    width: 10pt;
+    height: 10pt;
+    background: blue;
+    border-radius: 5pt;
+  }
+}
