@@ -3,13 +3,13 @@ import "./App.scss";
 const width = document.getElementsByTagName("body")[0].offsetWidth;
 
 const App = () => {
+  const [angle, setAngle] = useState(270);
+  const [coords, setCoords] = useState({});
   const [params, setParams] = useState({
     h: width / 2,
     k: width / 2,
     r: width / 2
   });
-  const [coords, setCoords] = useState({});
-  const [angle, setAngle] = useState(270);
 
   const handleAngleSliderChange = event => {
     setAngle(Number(event.target.value));
