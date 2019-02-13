@@ -61,11 +61,19 @@ const App = () => {
       >
         <p
           style={{
-            transform: `rotate(${angle}deg)`,
+            transform: `rotate(${360 - angle}deg)`,
             color: `hsl(${angle - 120}, 100%, 50%)`
           }}
         >
-          Hello, World!
+          Hello
+        </p>
+        <p
+          style={{
+            transform: `rotate(${angle}deg)`,
+            color: `hsl(${angle + 120}, 100%, 50%)`
+          }}
+        >
+          World
         </p>
         <div
           className="dot"
