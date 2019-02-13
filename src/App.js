@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from "react";
 import "./App.scss";
-const width = document.getElementsByTagName("body")[0].clientWidth;
+const width = document.getElementsByTagName("body")[0].offsetWidth;
 
 const App = () => {
-  const h = width / 2 + 5;
-  const k = width / 2 + 5;
-  const r = width / 2;
-  const [coords, setCoords] = useState({ x: 0, y: 200 });
+  const [params, setParams] = useState({
+    h: width / 2,
+    k: width / 2,
+    r: width / 2
+  });
+  const [coords, setCoords] = useState({});
   const [angle, setAngle] = useState(270);
 
   const handleAngleSliderChange = event => {
     setAngle(Number(event.target.value));
   };
+
+  const resetParams = () => {
+    const width = document.getElementById("circle-container").offsetWidth;
+    setParams({
+      h: width / 2,
+      k: width / 2,
+      r: width / 2 - 5
+    });
+  };
+
+  useEffect(() => {
+    resetParams();
+    window.addEventListener("resize", resetParams);
+    return () => window.removeEventListener("resize", resetParams);
+  }, []);
 
   const changeAngle = () => {
     setAngle(angle === 360 ? 0 : angle + 0.25);
@@ -21,15 +38,15 @@ const App = () => {
   useEffect(() => {
     timer = setInterval(() => {
       changeAngle();
-    }, 20);
+    }, 41.6);
     return () => clearInterval(timer);
   });
 
   useEffect(() => {
     let radian = (angle * Math.PI) / 180;
     setCoords({
-      x: h + r * Math.cos(radian),
-      y: k + r * Math.sin(radian)
+      x: params.h + params.r * Math.cos(radian),
+      y: params.k + params.r * Math.sin(radian)
     });
   }, [angle]);
 
@@ -42,6 +59,14 @@ const App = () => {
             90}deg, black, hsl(${angle - 180}, 100%, 50%))`
         }}
       >
+        <p
+          style={{
+            transform: `rotate(${angle}deg)`,
+            color: `hsl(${angle - 120}, 100%, 50%)`
+          }}
+        >
+          Hello, World!
+        </p>
         <div
           className="dot"
           style={{
@@ -54,12 +79,8 @@ const App = () => {
       </div>
       <Slider {...{ angle, handleAngleSliderChange }} />
       <dl>
-        <dt>Angle</dt>
-        <dd>{angle}</dd>
-        <dt>X</dt>
-        <dd>{coords.x}</dd>
-        <dt>Y</dt>
-        <dd>{coords.y}</dd>
+        <dt>state</dt>
+        <dd>{JSON.stringify({ angle, coords, params }, null, 2)}</dd>
       </dl>
     </div>
   );
